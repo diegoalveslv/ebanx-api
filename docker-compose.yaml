@@ -1,0 +1,30 @@
+services:
+  ebanx-api:
+    image: ebanx-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - ebanx
+  ngrok:
+    image: ngrok/ngrok:3-alpine
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    depends_on:
+      - ebanx-api
+    links:
+      - ebanx-api
+    volumes:
+      - ./ngrok.yml:/etc/ngrok.yml
+    ports:
+      - "4040:4040"  # ngrok web interface
+    networks:
+      - ebanx
+networks:
+  ebanx:
+    driver: bridge

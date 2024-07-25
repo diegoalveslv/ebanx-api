@@ -1,0 +1,6 @@
+authtoken: <>
+version: 2
+tunnels:
+  ebanx-api:
+    addr: http://ebanx-api:8080
+    proto: http
